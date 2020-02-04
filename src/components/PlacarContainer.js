@@ -26,27 +26,48 @@ export default class PlacarContainer extends React.Component {
     }
    
     render() {
+
+        const { partida, casa, visitante} = this.props;
+        const estilo =  {float: "left", "marginRight": "20px"};
         return ( 
             <div>
-                <div style={{float: "left", "marginRight": "20px"}}>
+                
+                <div style={ estilo }>
                     <h3>Casa</h3>
-                    <Time nome={this.props.casa.nome} 
+                    <Time nome={ casa.nome } 
                     gols={this.state.gols_casa}
                     marcarGol={this.marcarGolCasa.bind(this)}/>
-                    </div>
-
-                <div style={{float: "left", "marginRight": "20px"}}>                    <Partida estadio={this.props.partida.estadio}
-                            data={this.props.partida.data}
-                            horario={this.props.partida.horario}/></div>
-                
-                <div style={{float: "left", "marginRight": "20px"}}>
-                <h3>Visitante</h3>
-                <Time nome={this.props.visitante.nome}
-                 gols={this.state.gols_visitante}
-                 marcarGol={this.marcarGolVisitante.bind(this)}/>
                 </div>
-            <div style={{clear: "both"}}></div>   
+
+                <div style={ estilo }>
+                    <Partida  {...partida} />
+                </div>
+                
+                <div style={ estilo }>
+                    <h3>Visitante</h3>
+                    <Time nome={ visitante.nome }
+                    gols={this.state.gols_visitante}
+                    marcarGol={this.marcarGolVisitante.bind(this)}/>
+                
+                </div>
+                <div>{this.props.clima}</div>
+                <div style={{clear: "both"}}></div>   
+            
             </div>
         );
     }
+}
+
+// Aqui declaro que quero a propriedade , quando for declarado esse componente.
+PlacarContainer.propTypes = {
+    
+    clima: React.PropTypes.string,
+
+    //aqui declaro que essa propriedade vai ser obrigátoria.
+    tempo: React.PropTypes.number.isRequired,
+};
+
+//DefaultProps server para passar um valor por dafault...
+PlacarContainer.defaultProps = {
+    clima:  'Ensolarado',
 }
